@@ -83,8 +83,8 @@ public:
 	void add( UnicodeString const& line, std::string const& when = now_ms_str() );
 	bool save( std::string const& filename, bool );
 	void save( std::ostream& histFile );
-	bool load( std::string const& filename );
-	void load( std::istream& histFile );
+	Replxx::HistoryLoadResult load( std::string const& filename );
+	bool load( std::istream& histFile );
 	void clear( void );
 	void set_max_size( int len );
 	void set_unique( bool unique_ ) {
@@ -141,7 +141,7 @@ private:
 	void trim_to_max_size( void );
 	void remove_duplicate( UnicodeString const& );
 	void remove_duplicates( void );
-	void do_load( std::istream& );
+	bool do_load( std::istream& );
 	entries_t::iterator last( void );
 	void sort( void );
 	void reset_iters( void );

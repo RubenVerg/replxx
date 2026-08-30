@@ -205,11 +205,13 @@ bool is_timestamp( std::string const& s ) {
 
 }
 
-void History::do_load( std::istream& histFile ) {
+bool History::do_load( std::istream& histFile ) {
 	string line;
 	string when( "0000-00-00 00:00:00.000" );
 	UnicodeString us;
+	size_t line_num = 0;
 	while ( getline( histFile, line ).good() ) {
+		++ line_num;
 		string::size_type eol( line.find_first_of( "\r\n" ) );
 		if ( eol != string::npos ) {
 			line.erase( eol );
@@ -217,6 +219,8 @@ void History::do_load( std::istream& histFile ) {
 		if ( is_timestamp( line ) ) {
 			when.assign( line, 4, std::string::npos );
 			continue;
+		} else {
+			if (line_num == 1) return false;
 		}
 		if ( ! line.empty() ) {
 			us.assign( line );
@@ -224,26 +228,29 @@ void History::do_load( std::istream& histFile ) {
 			_entries.emplace_back( when, us );
 		}
 	}
-}
-
-bool History::load( std::string const& filename ) {
-	ifstream histFile( filename );
-	if ( ! histFile ) {
-		clear();
-		return false;
-	}
-	load(histFile);
 	return true;
 }
 
-void History::load( std::istream& histFile ) {
+Replxx::HistoryLoadResult History::load( std::string const& filename ) {
+	ifstream histFile( filename );
+	if ( ! histFile ) {
+		clear();
+		return Replxx::HistoryLoadResult::HistoryLoadFail;
+	}
+	return load(histFile) ? Replxx::HistoryLoadResult::HistoryLoadSuccess : Replxx::HistoryLoadResult::HistoryLoadIncorrectFormat;
+}
+
+bool History::load( std::istream& histFile ) {
 	clear();
-	do_load( histFile );
+	if (!do_load(histFile)) {
+		return false;
+	}
 	sort();
 	remove_duplicates();
 	trim_to_max_size();
 	_previous = _current = last();
 	_yankPos = _entries.end();
+	return true;
 }
 
 void History::sort( void ) {

@@ -174,7 +174,7 @@ public:
 	bool history_sync( std::string const& filename );
 	bool history_save( std::string const& filename );
 	void history_save( std::ostream& out );
-	bool history_load( std::string const& filename );
+	Replxx::HistoryLoadResult history_load( std::string const& filename );
 	void history_load( std::istream& in );
 	void history_clear( void );
 	Replxx::HistoryScan::impl_t history_scan( void ) const;

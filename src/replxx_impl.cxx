@@ -2468,7 +2468,7 @@ bool Replxx::ReplxxImpl::history_sync( std::string const& filename ) {
 	return ( _history.save( filename, true ) );
 }
 
-bool Replxx::ReplxxImpl::history_load( std::string const& filename ) {
+Replxx::HistoryLoadResult Replxx::ReplxxImpl::history_load( std::string const& filename ) {
 	return ( _history.load( filename ) );
 }
 

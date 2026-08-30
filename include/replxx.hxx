@@ -547,12 +547,18 @@ public:
 	 */
 	void history_save( std::ostream& out );
 
+	enum class HistoryLoadResult : int {
+		HistoryLoadSuccess = 0,          /* history was successfully loaded */
+		HistoryLoadFail = -1,            /* no history was loaded due to not being able to load the file */
+		HistoryLoadIncorrectFormat = -2, /* could load the history file, but its format is incorrect, and as such history was not loaded */
+	};
+
 	/*! \brief Load REPL's history from given file.
 	 *
 	 * \param filename - a path to the file which contains REPL's history that should be loaded.
 	 * \return True iff history file was successfully opened.
 	 */
-	bool history_load( std::string const& filename );
+	HistoryLoadResult history_load( std::string const& filename );
 
 	/*!
 	 * \copydoc history_load

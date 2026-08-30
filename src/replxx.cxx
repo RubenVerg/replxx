@@ -166,7 +166,7 @@ void Replxx::history_save( std::ostream& out ) {
 	_impl->history_save( out );
 }
 
-bool Replxx::history_load( std::string const& filename ) {
+Replxx::HistoryLoadResult Replxx::history_load( std::string const& filename ) {
 	return ( _impl->history_load( filename ) );
 }
 
@@ -661,9 +661,9 @@ int replxx_history_save( ::Replxx* replxx_, const char* filename ) {
  *
  * If the file exists and the operation succeeded 0 is returned, otherwise
  * on error -1 is returned. */
-int replxx_history_load( ::Replxx* replxx_, const char* filename ) {
+HistoryLoadResult replxx_history_load( ::Replxx* replxx_, const char* filename ) {
 	replxx::Replxx::ReplxxImpl* replxx( reinterpret_cast<replxx::Replxx::ReplxxImpl*>( replxx_ ) );
-	return ( replxx->history_load( filename ) ? 0 : -1 );
+	return static_cast<HistoryLoadResult>(replxx->history_load(filename));
 }
 
 void replxx_history_clear( ::Replxx* replxx_ ) {

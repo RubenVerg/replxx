@@ -572,12 +572,18 @@ REPLXX_IMPEXP int replxx_history_sync( Replxx*, const char* filename );
  */
 REPLXX_IMPEXP int replxx_history_save( Replxx*, const char* filename );
 
+typedef enum {
+	HistoryLoadSuccess = 0,          /* history was successfully loaded */
+	HistoryLoadFail = -1,            /* no history was loaded due to not being able to load the file */
+	HistoryLoadIncorrectFormat = -2, /* could load the history file, but its format is incorrect, and as such history was not loaded */
+} HistoryLoadResult;
+
 /*! \brief Load REPL's history from given file.
  *
  * \param filename - a path to the file which contains REPL's history that should be loaded.
- * \return 0 iff history file was successfully opened, -1 otherwise.
+ * \return whether loading history was successful
  */
-REPLXX_IMPEXP int replxx_history_load( Replxx*, const char* filename );
+REPLXX_IMPEXP HistoryLoadResult replxx_history_load( Replxx*, const char* filename );
 
 /*! \brief Clear REPL's in-memory history.
  */
