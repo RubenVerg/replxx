@@ -206,6 +206,7 @@ public:
 	Replxx::State get_state( void ) const;
 	void set_state( Replxx::State const& );
 	void set_ignore_case( bool val );
+	char32_t read_char( HINT_ACTION = HINT_ACTION::SKIP );
 private:
 	ReplxxImpl( ReplxxImpl const& ) = delete;
 	ReplxxImpl& operator = ( ReplxxImpl const& ) = delete;
@@ -270,7 +271,6 @@ private:
 	Replxx::ACTION_RESULT incremental_history_search( char32_t startChar );
 	Replxx::ACTION_RESULT common_prefix_search( char32_t startChar );
 	Replxx::ACTION_RESULT bracketed_paste( char32_t startChar );
-	char32_t read_char( HINT_ACTION = HINT_ACTION::SKIP );
 	char const* read_from_stdin( void );
 	char32_t do_complete_line( bool );
 	void call_modify_callback( void );

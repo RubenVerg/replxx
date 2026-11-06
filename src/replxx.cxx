@@ -266,6 +266,10 @@ void Replxx::set_state( Replxx::State const& state_ ) {
 	_impl->set_state( state_ );
 }
 
+char32_t Replxx::read_char ( void ) {
+	return _impl->read_char( ReplxxImpl::HINT_ACTION::REPAINT );
+}
+
 void Replxx::set_ignore_case( bool val ) {
 	_impl->set_ignore_case( val );
 }
@@ -394,6 +398,11 @@ void replxx_set_state( ::Replxx* replxx_, ReplxxState* state ) {
 	replxx->set_state( replxx::Replxx::State( state->text, state->cursorPosition ) );
 }
 
+char32_t replxx_read_char( ::Replxx* replxx_ ) {
+	replxx::Replxx::ReplxxImpl* replxx( reinterpret_cast<replxx::Replxx::ReplxxImpl*>( replxx_ ) );
+	return replxx->read_char( replxx::Replxx::ReplxxImpl::HINT_ACTION::REPAINT );
+}
+
 void replxx_set_ignore_case( ::Replxx* replxx_, int val ) {
 	replxx::Replxx::ReplxxImpl* replxx( reinterpret_cast<replxx::Replxx::ReplxxImpl*>( replxx_ ) );
 	replxx->set_ignore_case( val );
@@ -520,7 +529,8 @@ void highlighter_fwd( replxx_highlighter_callback_t fn, std::string const& input
 
 void replxx_set_highlighter_callback( ::Replxx* replxx_, replxx_highlighter_callback_t* fn, void* userData ) {
 	replxx::Replxx::ReplxxImpl* replxx( reinterpret_cast<replxx::Replxx::ReplxxImpl*>( replxx_ ) );
-	replxx->set_highlighter_callback( std::bind( &highlighter_fwd, fn, _1, _2, userData ) );
+	if ( ! fn ) replxx->set_highlighter_callback( nullptr );
+	else replxx->set_highlighter_callback( std::bind( &highlighter_fwd, fn, _1, _2, userData ) );
 }
 
 replxx::Replxx::hints_t hints_fwd( replxx_hint_callback_t fn, std::string const& input_, int& contextLen_, replxx::Replxx::Color& color_, void* userData ) {

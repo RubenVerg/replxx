@@ -760,8 +760,8 @@ void Replxx::ReplxxImpl::indent( bool last ) {
 	if ( ! _indentMultiline ) {
 		return;
 	}
-	_display.push_back( last ? U'└' : U'│' );
-	for ( int i( 1 ); i < _prompt.indentation(); ++ i ) {
+	if ( _prompt._text.length() > 0 ) _display.push_back( last ? U'└' : U'│' );
+	for ( int i( _prompt._text.length() > 0 ); i < _prompt.indentation(); ++ i ) {
 		_display.push_back( ' ' );
 	}
 }

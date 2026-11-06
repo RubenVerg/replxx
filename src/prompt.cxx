@@ -31,8 +31,13 @@ Prompt::Prompt( Terminal& terminal_ )
 }
 
 void Prompt::write( bool multiline ) {
-	_text[0] = multiline? U'┌' : ' ';
+	char32_t r;
+	if ( multiline && _text.length() > 0 ) {
+		r = _text[0];
+		_text[0] = U'┌';
+	}
 	_terminal.write32( _text.get(), _text.length() );
+	if ( multiline && _text.length() > 0 ) _text[0] = r;
 }
 
 void Prompt::update_screen_columns( void ) {

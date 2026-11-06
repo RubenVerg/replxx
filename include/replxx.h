@@ -62,6 +62,8 @@ extern "C" {
 #	define REPLXX_IMPEXP /**/
 #endif
 
+#include <uchar.h>
+
 /*! \brief Color definitions to use in highlighter callbacks.
  */
 typedef enum {
@@ -392,6 +394,12 @@ REPLXX_IMPEXP void replxx_get_state( Replxx*, ReplxxState* state );
  * \param state - new state of the model.
  */
 REPLXX_IMPEXP void replxx_set_state( Replxx*, ReplxxState* state );
+
+/*! \brief Get a character from the terminal.
+ * 
+ * Call at your own risk.
+ */
+REPLXX_IMPEXP char32_t replxx_read_char( Replxx* );
 
 /*! \brief Enable/disable case insensitive history search and completion.
  *

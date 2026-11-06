@@ -444,6 +444,12 @@ public:
 	 */
 	void set_state( State const& state );
 
+	/*! \brief Get a character from the terminal.
+	 * 
+	 * Call at your own risk.
+	 */
+	char32_t read_char( void );
+
 	/*! \brief Enable/disable case insensitive history search and completion.
 	 *
 	 * \param val - if set to non-zero then history search and completion will be case insensitive.
