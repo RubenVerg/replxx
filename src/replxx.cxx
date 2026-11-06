@@ -398,9 +398,9 @@ void replxx_set_state( ::Replxx* replxx_, ReplxxState* state ) {
 	replxx->set_state( replxx::Replxx::State( state->text, state->cursorPosition ) );
 }
 
-char32_t replxx_read_char( ::Replxx* replxx_ ) {
+uint32_t replxx_read_char( ::Replxx* replxx_ ) {
 	replxx::Replxx::ReplxxImpl* replxx( reinterpret_cast<replxx::Replxx::ReplxxImpl*>( replxx_ ) );
-	return replxx->read_char( replxx::Replxx::ReplxxImpl::HINT_ACTION::REPAINT );
+	return (uint32_t)(replxx->read_char( replxx::Replxx::ReplxxImpl::HINT_ACTION::REPAINT ));
 }
 
 void replxx_set_ignore_case( ::Replxx* replxx_, int val ) {

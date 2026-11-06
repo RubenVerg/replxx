@@ -62,7 +62,7 @@ extern "C" {
 #	define REPLXX_IMPEXP /**/
 #endif
 
-#include <uchar.h>
+#include <stdint.h>
 
 /*! \brief Color definitions to use in highlighter callbacks.
  */
@@ -399,7 +399,7 @@ REPLXX_IMPEXP void replxx_set_state( Replxx*, ReplxxState* state );
  * 
  * Call at your own risk.
  */
-REPLXX_IMPEXP char32_t replxx_read_char( Replxx* );
+REPLXX_IMPEXP uint32_t replxx_read_char( Replxx* );
 
 /*! \brief Enable/disable case insensitive history search and completion.
  *
